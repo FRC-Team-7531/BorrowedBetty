@@ -39,17 +39,22 @@ public class ControlsXbox implements Controls {
   }
 
   @Override
-  public Trigger shoot() {
+  public Trigger pivotDown() {
     return controller.rightTrigger();
   }
 
   @Override
-  public Trigger intake() {
+  public Trigger pivotUp() {
     return controller.leftTrigger();
   }
 
   @Override
-  public Trigger stowIntake() {
+  public Trigger intake() {
+    return controller.rightBumper();
+  }
+
+  @Override
+  public Trigger outake() {
     return controller.leftBumper();
   }
 
@@ -96,5 +101,10 @@ public class ControlsXbox implements Controls {
   @Override
   public Trigger alignTest() {
     return controller.povUp();
+  }
+
+  @Override
+  public Trigger shoot() {
+    return controller.rightTrigger();
   }
 }

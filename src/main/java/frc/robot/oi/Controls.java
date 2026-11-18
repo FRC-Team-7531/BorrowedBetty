@@ -18,11 +18,13 @@ public interface Controls {
 
   Trigger resetGyro();
 
-  Trigger shoot();
+  Trigger pivotDown();
+
+  Trigger pivotUp();
 
   Trigger intake();
 
-  Trigger stowIntake();
+  Trigger outake();
 
   Trigger stowHood();
 
@@ -41,4 +43,6 @@ public interface Controls {
   Trigger deployTest();
 
   Trigger alignTest();
+
+  Trigger shoot();
 }

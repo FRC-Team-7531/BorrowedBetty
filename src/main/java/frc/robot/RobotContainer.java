@@ -17,9 +17,14 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants.Mode;
 import frc.robot.RobotState.ShotMode;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.Intake.intakeToggle_cmd;
+import frc.robot.commands.Intake.manualFoldIntake_cmd;
+import frc.robot.commands.Intake.manualUnfoldIntake_cmd;
+import frc.robot.commands.Intake.outakeToggle_cmd;
 import frc.robot.generated.TunerConstants;
 import frc.robot.oi.Controls;
 import frc.robot.oi.ControlsXbox;
+import frc.robot.subsystems.SS_Intake;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
@@ -39,8 +44,20 @@ import java.util.Optional;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class RobotContainer {
+  // Subsystems
   private Drive drive;
   private Vision vision;
+  private final SS_Intake intake = new SS_Intake();
+
+  /////////////////////////////////////////////////////////////////
+
+  // commands
+  public intakeToggle_cmd intakeToggle = new intakeToggle_cmd(intake);
+  public outakeToggle_cmd outakeToggle = new outakeToggle_cmd(intake);
+  public manualFoldIntake_cmd manualPivotUp = new manualFoldIntake_cmd(intake);
+  public manualUnfoldIntake_cmd manualPivotDown = new manualUnfoldIntake_cmd(intake);
+
+  /////////////////////////////////////////////////////////////////
 
   private final ZoneVisualizer zoneVisualizer = new ZoneVisualizer();
   private final Controls controls;
@@ -121,6 +138,12 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
+    // Betty controls
+    controls.intake().onTrue(intakeToggle);
+    controls.outake().onTrue(outakeToggle);
+    controls.pivotUp().whileTrue(manualPivotUp);
+    controls.pivotDown().whileTrue(manualPivotDown);
+
     // Drive
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
